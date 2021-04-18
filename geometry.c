@@ -1,14 +1,23 @@
+#include "geometry.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <strings.h>
+#define UNUSED(x) (void)(x)
 
-void Check(char ch[], int n)
+typedef struct circle circle;
+
+void Check(char ch[], int n, circle* ring)
 {
+    UNUSED(n);
     int i = 0;
+
+    char x[20], y[20], radius[20];
+    int count = 0;
 
     while (ch[i] == ' ')
         i++;
-
     if (ch[i] == 'c') {
         i++;
         char example[6] = {"circle"};
@@ -32,8 +41,11 @@ void Check(char ch[], int n)
         while (ch[i] == ' ')
             i++;
 
-        if (isdigit(ch[i]))
+        if (isdigit(ch[i])){
+            x[count] = ch[i];
+            count++;
             i++;
+          }
         else {
             printf("be3");
             return;
@@ -46,8 +58,12 @@ void Check(char ch[], int n)
             return;
         }
 
-        if (isdigit(ch[i]))
+        count = 0;
+        if (isdigit(ch[i])){
+           y[count] = ch[i];
+           count++;
             i++;
+          }
         else {
             printf("be5");
             return;
@@ -55,8 +71,11 @@ void Check(char ch[], int n)
 
         while (ch[i] == ' ')
             i++;
-        if (ch[i] == ',')
+        if (ch[i] == ','){
+           y[count] = ch[i];
+           count++;
             i++;
+          }
         else {
             printf("be6");
             return;
@@ -65,17 +84,25 @@ void Check(char ch[], int n)
         while (ch[i] == ' ')
             i++;
 
+        count = 0;
         // float radius = 0;
         if (isdigit(ch[i])) {
+           radius[count] = ch[i];
+           count++;
             // radius = atof (ch[i]);
             i++;
             if (ch[i] == '.') {
+               radius[count] = ch[i];
+               count++;
                 i++;
-                if (isdigit(ch[i]))
+                if (isdigit(ch[i])){
+                   radius[count] = ch[i];
+                   count++;
                     i++;
-            } else {
-                printf("be7");
-                return;
+                  } else {
+                      printf("be7");
+                      return;
+                  }
             }
 
         } else {
@@ -94,29 +121,27 @@ void Check(char ch[], int n)
         } else
             i++;
 
-        while (i != 256) {
+        while (i != n-1) {
             if (isascii(ch[i])) {
                 printf("be10");
                 return;
             } else
                 i++;
         }
-        // a тут else count(radius);
+
+        // a тут else count(radius)
+
     }
+    ring->x = strtod (x, NULL);
+    ring->y = strtod (y, NULL);
+    ring->radius = strtod (radius, NULL);
+  }
+
+void Perimeter(circle *ring){
+  ring->per = ring->radius * 2 * 3.14;
 }
 
-int main()
-{
-    int n = 0;
-
-    char line[256];
-    fgets(line, 256, stdin);
-
-    n = strlen(line);
-
-    char data[n];
-    data[n] = line[256];
-    Check(data, n);
-
-    return 0;
+void Square (circle *ring){
+  ring->sq = ring->radius * ring->radius * 3.14;
 }
+//void execute()
