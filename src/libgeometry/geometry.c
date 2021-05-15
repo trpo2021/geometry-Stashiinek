@@ -1,12 +1,12 @@
 #include "geometry.h"
 #include <ctype.h>
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 #include <strings.h>
 #define UNUSED(x) (void)(x)
 
-//typedef struct circle circle;
+// typedef struct circle circle;
 
 void Check(char ch[], int n, circle* ring)
 {
@@ -41,12 +41,11 @@ void Check(char ch[], int n, circle* ring)
         while (ch[i] == ' ')
             i++;
 
-        if (isdigit(ch[i])){
+        if (isdigit(ch[i])) {
             x[count] = ch[i];
             count++;
             i++;
-          }
-        else {
+        } else {
             printf("be3");
             return;
         }
@@ -59,24 +58,22 @@ void Check(char ch[], int n, circle* ring)
         }
 
         count = 0;
-        if (isdigit(ch[i])){
-           y[count] = ch[i];
-           count++;
+        if (isdigit(ch[i])) {
+            y[count] = ch[i];
+            count++;
             i++;
-          }
-        else {
+        } else {
             printf("be5");
             return;
         }
 
         while (ch[i] == ' ')
             i++;
-        if (ch[i] == ','){
-           y[count] = ch[i];
-           count++;
+        if (ch[i] == ',') {
+            y[count] = ch[i];
+            count++;
             i++;
-          }
-        else {
+        } else {
             printf("be6");
             return;
         }
@@ -87,22 +84,22 @@ void Check(char ch[], int n, circle* ring)
         count = 0;
         // float radius = 0;
         if (isdigit(ch[i])) {
-           radius[count] = ch[i];
-           count++;
+            radius[count] = ch[i];
+            count++;
             // radius = atof (ch[i]);
             i++;
             if (ch[i] == '.') {
-               radius[count] = ch[i];
-               count++;
+                radius[count] = ch[i];
+                count++;
                 i++;
-                if (isdigit(ch[i])){
-                   radius[count] = ch[i];
-                   count++;
+                if (isdigit(ch[i])) {
+                    radius[count] = ch[i];
+                    count++;
                     i++;
-                  } else {
-                      printf("be7");
-                      return;
-                  }
+                } else {
+                    printf("be7");
+                    return;
+                }
             }
 
         } else {
@@ -121,7 +118,7 @@ void Check(char ch[], int n, circle* ring)
         } else
             i++;
 
-        while (i != n-1) {
+        while (i != n - 1) {
             if (isascii(ch[i])) {
                 printf("be10");
                 return;
@@ -130,42 +127,45 @@ void Check(char ch[], int n, circle* ring)
         }
 
         // a тут else count(radius)
-
     }
-    ring->x = strtod (x, NULL);
-    ring->y = strtod (y, NULL);
-    ring->radius = strtod (radius, NULL);
-  }
-
-void Perimeter(circle *ring){
-  ring->per = ring->radius * 2 * 3.14;
+    ring->x = strtod(x, NULL);
+    ring->y = strtod(y, NULL);
+    ring->radius = strtod(radius, NULL);
 }
 
-void Square (circle *ring){
-  ring->sq = ring->radius * ring->radius * 3.14;
+void Perimeter(circle* ring)
+{
+    ring->per = ring->radius * 2 * 3.14;
 }
 
-int Executes(circle *ring1, circle *ring2){
-  if((ring1->x + ring1->radius) == (ring2->x + ring2->radius)){
-    return 1;
-  } else if ((ring2->x + ring2->radius) == (ring1->x + ring2->radius)){
-    return 1;
-  }
+void Square(circle* ring)
+{
+    ring->sq = ring->radius * ring->radius * 3.14;
+}
 
-  if ((((ring1->x + ring1->radius) > (ring2->x + ring2->x))&&((ring1->x - ring1->radius) < (ring2->x - ring2->radius)))){
+int Executes(circle* ring1, circle* ring2)
+{
+    if ((ring1->x + ring1->radius) == (ring2->x + ring2->radius)) {
+        return 1;
+    } else if ((ring2->x + ring2->radius) == (ring1->x + ring2->radius)) {
+        return 1;
+    }
+
+    if ((((ring1->x + ring1->radius) > (ring2->x + ring2->x))
+         && ((ring1->x - ring1->radius) < (ring2->x - ring2->radius)))) {
+        return 0;
+    }
+    if ((ring1->x + ring1->radius) > ring2->x) {
+        return 2;
+    } else if ((ring2->x + ring2->radius) > ring1->x) {
+        return 2;
+    }
+
+    if ((ring1->y + ring1->radius) > ring2->y) {
+        return 2;
+    } else if ((ring2->y + ring2->radius) > ring1->y) {
+        return 2;
+    }
+
     return 0;
-  }
-  if((ring1->x + ring1->radius) > ring2->x){
-    return 2;
-  } else if ((ring2->x + ring2->radius) > ring1->x){
-    return 2;
-  }
-
-  if((ring1->y + ring1->radius) > ring2->y){
-    return 2;
-  } else if ((ring2->y + ring2->radius) > ring1->y){
-    return 2;
-  }
-
-  return 0;
 }

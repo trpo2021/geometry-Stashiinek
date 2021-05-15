@@ -1,1 +1,4 @@
 gtest
+*.o
+*.d
+main
